@@ -1,5 +1,5 @@
-# Scrappy
-Work in progress!
+# night crawler
+crawls around `#hack-night` in the purdue hackers discord waiting for you to share something. fork of [blairhackclub/scrappy](https://github.com/blairhackclub/scrappy). currently used for [purduehackers/night](https://github.com/purduehackers/night).
 
 ## Environment variables
 - AIRTABLE_BASE_ID
