@@ -71,38 +71,39 @@ function uploadScrap(discordUid, message, threadChannelId) {
             }
           }
         ],
-        (err, records) => {
+        (err) => {
           if (err) {
             console.error(err)
             return reject(err)
           }
-          return resolve('fish')
+          resolve('fish')
+        }
+      )
+    } else {
+      base('Scraps').create(
+        [
+          {
+            fields: {
+              'Discord Message ID': message.id,
+              'Discord Thread ID': threadChannelId,
+              Description: cleanContent(message.content, message),
+              Attachments: message.attachments.map((a) => {
+                return { url: a.url }
+              }),
+              User: [discordUid]
+            }
+          }
+        ],
+        (err) => {
+          if (err) {
+            console.error(err)
+            return reject(err)
+          }
+
+          resolve('scrap')
         }
       )
     }
-    base('Scraps').create(
-      [
-        {
-          fields: {
-            'Discord Message ID': message.id,
-            'Discord Thread ID': threadChannelId,
-            Description: cleanContent(message.content, message),
-            Attachments: message.attachments.map((a) => {
-              return { url: a.url }
-            }),
-            User: [discordUid]
-          }
-        }
-      ],
-      (err, records) => {
-        if (err) {
-          console.error(err)
-          return reject(err)
-        }
-
-        resolve('scrap')
-      }
-    )
   })
 }
 
@@ -143,7 +144,7 @@ export async function handleScrapbook(client, message) {
   if (scrap === 'fish') {
     client.channels.cache
       .get(threadChannel.id)
-      .send('ok the fish of the day has been set')
+      .send('ok i will scoop the fish of the day')
   } else {
     client.channels.cache.get(threadChannel.id).send('ok your post is live 🙌')
   }
