@@ -60,6 +60,26 @@ function createUser(discordUid, discordUsername, avatarURL) {
 
 function uploadScrap(discordUid, message, threadChannelId) {
   return new Promise((resolve, reject) => {
+    if (message.content.toLowerCase() === 'fish of the day') {
+      base('Fish of the Day').create(
+        [
+          {
+            fields: {
+              Fish: message.attachments.map((a) => {
+                return { url: a.url }
+              })
+            }
+          }
+        ],
+        (err, records) => {
+          if (err) {
+            console.error(err)
+            return reject(err)
+          }
+          return resolve('fish')
+        }
+      )
+    }
     base('Scraps').create(
       [
         {
@@ -80,7 +100,7 @@ function uploadScrap(discordUid, message, threadChannelId) {
           return reject(err)
         }
 
-        resolve(records[0])
+        resolve('scrap')
       }
     )
   })
@@ -119,6 +139,12 @@ export async function handleScrapbook(client, message) {
     .send(
       'i am CRAWLING AROUND with EXCITEMENT that you posted something. lemme upload.........'
     )
-  await uploadScrap(user.id, message, threadChannel.id)
-  client.channels.cache.get(threadChannel.id).send('ok your post is live 🙌Ⱒ')
+  const scrap = await uploadScrap(user.id, message, threadChannel.id)
+  if (scrap === 'fish') {
+    client.channels.cache
+      .get(threadChannel.id)
+      .send('ok the fish of the day has been set')
+  } else {
+    client.channels.cache.get(threadChannel.id).send('ok your post is live 🙌')
+  }
 }
