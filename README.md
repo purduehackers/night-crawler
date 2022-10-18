@@ -1,6 +1,8 @@
 # night crawler
 crawls around `#hack-night` in the purdue hackers discord waiting for you to share something. fork of [blairhackclub/scrappy](https://github.com/blairhackclub/scrappy). currently used for [purduehackers/night](https://github.com/purduehackers/night).
 
+<img width="418" alt="Screen Shot 2022-10-17 at 10 23 11 PM" src="https://user-images.githubusercontent.com/14811170/196320643-99ce97af-7f52-455c-9c85-47813e79a08f.png">
+
 ## Environment variables
 - AIRTABLE_BASE_ID
 - AIRTABLE_API_KEY
